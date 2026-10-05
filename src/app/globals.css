@@ -3,25 +3,167 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 0 0% 100%;
+  --foreground: 228 69% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 228 69% 10%;
+  --primary: 224 80% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 70% 95%;
+  --secondary-foreground: 225 30% 28%;
+  --muted: 220 45% 94%;
+  --muted-foreground: 225 22% 48%;
+  --accent: 224 80% 60%;
+  --accent-foreground: 0 0% 100%;
+  --verified: 224 72% 48%;
+  --verified-foreground: 0 0% 100%;
+  --destructive: 0 72% 38%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 224 70% 90%;
+  --input: 224 55% 86%;
+  --ring: 224 80% 60%;
+  --radius: 1rem;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background: #ffffff;
+  color: hsl(var(--foreground));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+::selection {
+  background: hsl(var(--primary) / 0.22);
+}
+
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 3px;
+}
+
+@keyframes hero-image-drift {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.07);
+  }
+}
+
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-image-motion {
+  animation: hero-image-drift 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.hero-enter {
+  animation: hero-enter 550ms ease-out both;
+}
+
+.hero-enter-delay {
+  animation: hero-enter 550ms 120ms ease-out both;
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.hero-card-float {
+  animation: hero-float 5.5s ease-in-out infinite;
+}
+
+.hero-select {
+  width: 100%;
+  appearance: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: transparent;
+  padding: 0 1.1rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+.card-lift {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+@media (hover: hover) {
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 44px -28px rgb(70 115 235 / 0.45);
+  }
+}
+
+.nv-marker {
+  background: transparent;
+  border: none;
+}
+
+.nv-marker-dot {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #4673eb;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 4px rgba(70, 115, 235, 0.35);
+}
+
+.leaflet-container {
+  z-index: 0;
+  height: 100%;
+  width: 100%;
+  font-family: inherit;
+  background: hsl(var(--muted));
+}
+
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 20 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .card-lift:hover {
+    transform: none;
   }
 }
